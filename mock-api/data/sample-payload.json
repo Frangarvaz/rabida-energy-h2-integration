@@ -1,0 +1,21 @@
+{
+  "batchId": "H2-2024-001",
+  "plant": "Rábida Energy · Palos de la Frontera",
+  "timestamp": "2024-05-23T13:00:00.000Z",
+  "production": {
+    "h2_volume_kg": 4200,
+    "purity_pct": "99.97",
+    "pressure_bar": 350,
+    "temperature_celsius": 75
+  },
+  "energy": {
+    "source": "renewable",
+    "type": "solar",
+    "consumed_kwh": 18400
+  },
+  "certification": {
+    "standard": "EU-GreenH2",
+    "co2_saved_t": "37.4",
+    "origin": "Huelva, Andalucía, ES"
+  }
+}
