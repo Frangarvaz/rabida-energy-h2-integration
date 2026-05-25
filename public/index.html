@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rábida Energy H₂ · SCADA Monitor</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f0f4ff;--white:#fff;--navy:#1a2e5a;--blue:#3b82f6;--blue-light:#eff6ff;--cyan:#0ea5e9;--green:#10b981;--green-light:#ecfdf5;--muted:#64748b;--border:#e2e8f0;--font:'Inter',sans-serif;--mono:'Space Mono',monospace}
+body{background:var(--bg);color:var(--navy);font-family:var(--font);min-height:100vh}
+nav{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.nav-logo{font-family:var(--mono);font-size:.75rem;color:var(--blue);font-weight:700;letter-spacing:.05em}
+.nav-badge{display:flex;align-items:center;gap:.5rem;background:var(--green-light);border:1px solid #a7f3d0;border-radius:20px;padding:.3rem .9rem;font-size:.7rem;font-weight:600;color:var(--green)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+main{max-width:960px;margin:0 auto;padding:2.5rem 1.5rem}
+.hero{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:3rem 2rem;text-align:center;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.05);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.hero-tag{display:inline-block;font-family:var(--mono);font-size:.68rem;color:var(--blue);background:var(--blue-light);border:1px solid #bfdbfe;border-radius:4px;padding:.3rem .8rem;letter-spacing:.08em;margin-bottom:1.5rem}
+.hero-value{font-size:clamp(3.5rem,10vw,6.5rem);font-weight:700;color:var(--navy);line-height:1;letter-spacing:-.02em;transition:color .3s}
+.hero-value.flash{color:var(--blue)}
+.hero-unit{font-size:1rem;color:var(--muted);margin-top:.5rem;font-weight:500}
+.hero-cert{font-family:var(--mono);font-size:.68rem;color:var(--muted);margin-top:.8rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem}
+.card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1.5rem;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.card-tag{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.6rem}
+.card-value{font-size:1.6rem;font-weight:700;color:var(--navy)}
+.card-value.blue{color:var(--blue)}
+.card-value.green{color:var(--green)}
+.card-sub{font-size:.72rem;color:var(--muted);margin-top:.3rem}
+.log-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.log-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.log-title{font-size:.8rem;font-weight:600;color:var(--navy)}
+.log-count{font-family:var(--mono);font-size:.65rem;color:var(--muted)}
+.log-entries{max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:.5rem}
+.log-entry{display:flex;gap:.8rem;align-items:flex-start;padding:.6rem .8rem;background:var(--bg);border-radius:6px;font-size:.72rem;border-left:3px solid var(--border);transition:border-color .4s}
+.log-entry.new{border-left-color:var(--green);background:var(--green-light)}
+.log-time{font-family:var(--mono);color:var(--blue);flex-shrink:0;font-size:.68rem}
+.log-text{color:var(--muted)}
+.controls{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}
+.btn{font-family:var(--font);font-size:.8rem;font-weight:600;padding:.6rem 1.4rem;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--navy);box-shadow:0 1px 3px rgba(0,0,0,.06);transition:all .15s}
+.btn:hover{background:var(--bg);border-color:var(--blue);color:var(--blue)}
+.btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn.primary:hover{background:var(--blue);border-color:var(--blue)}
+.btn.danger{border-color:#fca5a5;color:#ef4444}
+.btn.danger:hover{background:#fef2f2}
+.ctrl-hint{font-size:.72rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">RÁBIDA ENERGY · H₂ SCADA MONITOR</div>
+  <div class="nav-badge"><div class="dot"></div>LIVE</div>
+</nav>
+<main>
+  <div class="hero">
+    <div class="hero-tag">// H₂ PRODUCCIÓN ACTUAL · RABIDA-H2-01</div>
+    <div class="hero-value" id="h2-value">—</div>
+    <div class="hero-unit">kg/día producidos</div>
+    <div class="hero-cert" id="cert-id">—</div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div class="card-tag">Energía consumida</div>
+      <div class="card-value blue" id="energy">—</div>
+      <div class="card-sub">kWh</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Eficiencia</div>
+      <div class="card-value green" id="efficiency">—</div>
+      <div class="card-sub">%</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Estado certificación</div>
+      <div class="card-value green" id="status">—</div>
+      <div class="card-sub">EU-GreenH2-2024</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Última lectura</div>
+      <div class="card-value" id="timestamp" style="font-size:1.1rem">—</div>
+      <div class="card-sub">hoy</div>
+    </div>
+  </div>
+  <div class="log-card">
+    <div class="log-header">
+      <div class="log-title">Registro de lecturas</div>
+      <div class="log-count" id="count">0 lecturas</div>
+    </div>
+    <div class="log-entries" id="log"></div>
+  </div>
+  <div class="controls">
+    <button class="btn primary" onclick="fetchData()">↺ Refresh manual</button>
+    <button class="btn danger" id="toggle-btn" onclick="toggleAuto()">⏹ Parar auto</button>
+    <span class="ctrl-hint">Actualizando cada 5 segundos</span>
+  </div>
+</main>
+<script>
+let interval=null,running=true,count=0;
+async function fetchData(){
+  try{
+    const res=await fetch('/sensor/data');
+    const d=await res.json();
+    const h=document.getElementById('h2-value');
+    h.textContent=d.h2_kg_produced.toLocaleString('es-ES');
+    h.classList.add('flash');
+    setTimeout(()=>h.classList.remove('flash'),400);
+    document.getElementById('cert-id').textContent=d.certificate_id;
+    document.getElementById('energy').textContent=d.energy_kwh.toLocaleString('es-ES');
+    document.getElementById('efficiency').textContent=d.efficiency_pct;
+    document.getElementById('status').textContent=d.status;
+    document.getElementById('timestamp').textContent=new Date().toLocaleTimeString('es-ES');
+    count++;
+    document.getElementById('count').textContent=count+' lecturas';
+    const logEl=document.getElementById('log');
+    const e=document.createElement('div');
+    e.className='log-entry new';
+    e.innerHTML=`<span class="log-time">${new Date().toLocaleTimeString('es-ES')}</span><span class="log-text">H₂: ${d.h2_kg_produced} kg · Efic: ${d.efficiency_pct}% · ${d.certificate_id}</span>`;
+    logEl.prepend(e);
+    setTimeout(()=>e.classList.remove('new'),1200);
+    if(logEl.children.length>20)logEl.lastChild.remove();
+  }catch(e){console.error(e)}
+}
+function toggleAuto(){
+  const btn=document.getElementById('toggle-btn');
+  if(running){clearInterval(interval);btn.textContent='▶ Iniciar auto';btn.classList.remove('danger');running=false;}
+  else{interval=setInterval(fetchData,5000);btn.textContent='⏹ Parar auto';btn.classList.add('danger');running=true;}
+}
+fetchData();
+interval=setInterval(fetchData,5000);
+</script>
+</body>
+</html>
