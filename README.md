@@ -1,55 +1,28 @@
-# 🌊 Huelva H₂ Integration Hub
+# Rabida Energy H2 Integration Hub
 
-> SAP BTP Integration Suite · ABAP Cloud · S/4HANA Cloud · Hidrógeno Verde
+SAP BTP Integration Suite · ABAP Cloud · S/4HANA Cloud · Hidrogeno Verde
 
-![SAP BTP](https://img.shields.io/badge/SAP%20BTP-Integration%20Suite-0099D6)
-![ABAP Cloud](https://img.shields.io/badge/ABAP-Cloud-00A878)
-![License](https://img.shields.io/badge/License-MIT-blue)
+## Descripcion
 
-## 📌 Descripción
+Integracion end-to-end entre los sensores IoT de Rabida Energy y SAP S/4HANA Cloud usando SAP BTP Integration Suite.
 
-Integración end-to-end entre los sensores IoT del electrolizador de **Rábida Energy** y **SAP S/4HANA Cloud** usando **SAP BTP Integration Suite**.
+## Roadmap
 
-El sistema recibe datos de producción de hidrógeno verde en tiempo real, los valida, genera el certificado EU-GreenH2 y crea la orden de producción en S/4HANA de forma automática.
+- [x] Fase 1 - Diseno y documentacion
+- [x] Fase 2 - Mock API + iFlow basico
+- [x] Fase 3 - Groovy + Mapping + Certificado EU-GreenH2-2024
+- [x] Fase 4 - S/4HANA + ABAP Cloud (Tabla + CDS View + OData V4)
 
-## 🏗️ Arquitectura
+## Stack Tecnico
 
-Sensor IoT / SCADA
-↓ REST/JSON
-SAP BTP Integration Suite (CPI)
-├─ HTTP Adapter (inbound)
-├─ Groovy Script (validación + CO₂)
-├─ Message Mapping (JSON → OData)
-└─ OData Adapter (outbound)
-↓
-SAP S/4HANA Cloud
-├─ Production Order
-└─ CDS View ZI_H2Production
-
-## 🛠️ Stack Técnico
-
-| Capa | Tecnología |
+| Capa | Tecnologia |
 |---|---|
-| Datos entrada | REST · JSON · SCADA IoT |
-| Integración | SAP BTP · Integration Suite (CPI) |
-| Transformación | Groovy Scripts · Message Mapping |
-| Certificación | EU-GreenH2 · Groovy |
-| Destino | SAP S/4HANA Cloud · OData V4 |
-| ABAP Cloud | CDS Views · RAP Business Object |
+| Datos entrada | REST / JSON / SCADA IoT |
+| Integracion | SAP BTP / Integration Suite |
+| Transformacion | Groovy Scripts / Message Mapping |
+| Destino | SAP S/4HANA Cloud / OData V4 |
+| ABAP Cloud | CDS Views / Service Binding / Tabla transparente |
 
-## 🗺️ Roadmap
+## Autor
 
-- [x] Fase 1 · Diseño y documentación
-- [ ] Fase 2 · Mock API + iFlow básico
-- [ ] Fase 3 · Groovy + Mapping + Certificado EU
-- [ ] Fase 4 · S/4HANA + ABAP Cloud
-
-## 👤 Autor
-
-**Francisco García Vázquez** · SAP Developer · ABAP Cloud · BTP Integration · Huelva, Andalucía
-
-Certificaciones en progreso: C_CPI · C_ABAPD · C_CPE
-
-## 📄 Licencia
-
-MIT License · Proyecto de portfolio
+Francisco Garcia Vazquez - Desarrollador SAP ABAP Cloud | SAP BTP | Backend Developer - En formacion - Huelva
