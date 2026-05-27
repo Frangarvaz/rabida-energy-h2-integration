@@ -88,6 +88,12 @@ footer{background:#0d2240;padding:40px;text-align:center;}
 
 .cert-card:nth-child(odd){border-left:3px solid #4a9eff;border-top:3px solid #4a9eff;border-right:none;border-bottom:none;}
 .cert-card:nth-child(even){border-right:3px solid #4a9eff;border-bottom:3px solid #4a9eff;border-left:none;border-top:none;}
+
+.cert-card{position:relative;}
+.cert-card::before{content:'';position:absolute;top:0;left:0;width:40%;height:3px;background:linear-gradient(to right,#4a9eff,transparent);border-radius:2px 0 0 0;}
+.cert-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:40%;background:linear-gradient(to bottom,#4a9eff,transparent);border-radius:2px 0 0 0;}
+.cert-card:nth-child(even)::before{left:auto;right:0;background:linear-gradient(to left,#4a9eff,transparent);}
+.cert-card:nth-child(even)::after{left:auto;right:0;background:linear-gradient(to bottom,#4a9eff,transparent);}
 </style>
 </head>
 <body>
