@@ -94,6 +94,11 @@ footer{background:#0d2240;padding:40px;text-align:center;}
 .cert-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:40%;background:linear-gradient(to bottom,#4a9eff,transparent);border-radius:2px 0 0 0;}
 .cert-card:nth-child(even)::before{left:auto;right:0;background:linear-gradient(to left,#4a9eff,transparent);}
 .cert-card:nth-child(even)::after{left:auto;right:0;background:linear-gradient(to bottom,#4a9eff,transparent);}
+
+.cert-card::before{display:none;}
+.cert-card::after{display:none;}
+.cert-card:nth-child(odd){border:1px solid rgba(74,158,255,0.2);box-shadow:4px 4px 16px rgba(74,158,255,0.15);}
+.cert-card:nth-child(even){border:1px solid rgba(74,158,255,0.2);box-shadow:-4px 4px 16px rgba(74,158,255,0.15);}
 </style>
 </head>
 <body>
