@@ -79,7 +79,10 @@ footer{background:#0d2240;padding:40px;text-align:center;}
 .flink{display:flex;align-items:center;gap:6px;color:#7eb8f5;font-size:12px;font-weight:600;text-decoration:none;}
 .flink i{font-size:16px;}
 .footer-copy{font-size:11px;color:#2a4060;}
-@media(max-width:768px){.hero{grid-template-columns:1fr;padding:100px 20px 40px;}.hero-avatar{display:none;}.foto-mobile{display:block !important;}.foto-desktop{display:none !important;}.project-stats{grid-template-columns:1fr 1fr;}.certs-grid{grid-template-columns:1fr 1fr;}.skills-strip{gap:16px;padding:20px;}.nav-links{display:none;}.hero-btns{justify-content:center;}.section{padding:40px 20px;}}@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}</style>
+@media(max-width:768px){.hero{grid-template-columns:1fr;padding:100px 20px 40px;}.hero-avatar{display:none;}.foto-mobile{display:block !important;}.foto-desktop{display:none !important;}.project-stats{grid-template-columns:1fr 1fr;}.certs-grid{grid-template-columns:1fr 1fr;}.skills-strip{gap:16px;padding:20px;}.nav-links{display:none;}.hero-btns{justify-content:center;}.section{padding:40px 20px;}}@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s cubic-bezier(.22,.68,0,1.2);}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+</style>
 </head>
 <body>
 <nav>
@@ -308,5 +311,16 @@ function drawParticles() {
   requestAnimationFrame(drawParticles);
 }
 drawParticles();
-</script></body>
+</script>
+<script>
+document.querySelectorAll('.section, .project-card, .cert-card, .skill-item, .pstat').forEach((el, i) => {
+  el.classList.add('fade-up');
+  el.style.transitionDelay = (i % 4) * 0.1 + 's';
+});
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
 </html>
