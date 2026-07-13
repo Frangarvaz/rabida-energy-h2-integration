@@ -1,0 +1,4 @@
+@EndUserText.label: 'H2 Production Service Definition'
+define service ZSD_H2PRODUCTION {
+  expose ZI_H2PRODUCTION as H2Production;
+}
