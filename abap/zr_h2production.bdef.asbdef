@@ -1,0 +1,31 @@
+managed implementation in class ZBP_H2PRODUCTION unique;
+strict ( 2 );
+
+define behavior for ZR_H2PRODUCTION alias H2Production
+persistent table zfgv_h2prod
+lock master
+authorization master ( instance )
+{
+  create;
+  update;
+  delete;
+
+  validation validatePurity on save { create; update; }
+  determination setStatus on modify { create; update; }
+
+  field ( readonly ) CertificateId;
+
+  field ( readonly ) PlantId;
+  field ( readonly ) RecordDate;
+
+  mapping for zfgv_h2prod
+    {
+      PlantId       = plant_id;
+      RecordDate    = record_date;
+      H2KgProduced  = h2_kg_produced;
+      EnergyKwh     = energy_kwh;
+      EfficiencyPct = efficiency_pct;
+      Status        = status;
+      CertificateId = certificate_id;
+    }
+}
