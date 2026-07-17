@@ -1,14 +1,34 @@
 {
-  "name": "h2-demo",
+  "name": "rabida-energy-h2-integration",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "End-to-end green hydrogen certification integration: Node.js SCADA → SAP BTP Integration Suite → S/4HANA Cloud (ABAP Cloud + OData V4)",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "mock": "cd mock-api && node server.js",
+    "test:integration": "bash scripts/test_h2.sh"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "SAP",
+    "BTP",
+    "ABAP-Cloud",
+    "Integration-Suite",
+    "S4HANA",
+    "OData-V4",
+    "hydrogen",
+    "IoT",
+    "SCADA",
+    "CDS-Views",
+    "RAP",
+    "Fiori"
+  ],
+  "author": "Francisco García Vázquez",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Frangarvaz/rabida-energy-h2-integration.git"
+  },
+  "homepage": "https://frangarvaz.github.io/rabida-energy-h2-integration",
   "type": "commonjs",
   "dependencies": {
     "axios": "^1.16.1",
